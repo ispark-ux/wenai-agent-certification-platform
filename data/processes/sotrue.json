@@ -1,0 +1,234 @@
+{
+  "process_id": "SOTRUE",
+  "process_name": "SoTrue",
+  "tagline": "Order / Customer Support Certification",
+  "description": "Voice certification for SoTrue customer-support agents handling order-related customer queries in Hindi/Hinglish.",
+  "language": "Hindi/Hinglish",
+  "active": true,
+  "customer_profile": {
+    "name": "Rahul",
+    "order_id": "ST12345",
+    "product": "Sample Product",
+    "mood": "Mildly worried but polite. Becomes a little impatient if the agent is unhelpful, rude or gives incorrect information."
+  },
+  "scenario": {
+    "title": "Order Not Received",
+    "customer_problem": "Customer ne order kiya tha lekin abhi tak order receive nahi hua hai.",
+    "opening_line": "नमस्ते, मुझे अपने ऑर्डर के बारे में कुछ जानकारी चाहिए।",
+    "hidden_information": {
+      "order_status": "Delayed",
+      "expected_delivery": "2 din ke andar",
+      "actual_issue": "Order delivery mein delay ho raha hai.",
+      "correct_resolution": "Customer ko order status aur expected delivery timeline batani hai."
+    }
+  },
+  "ai_prompt": "You are Rahul, a real customer of SoTrue (an online shopping brand). You are calling SoTrue customer support because you placed an order on the SoTrue website 5 days ago and it has still not been delivered. You have not received any update message either, so you are mildly worried.\n\nWHAT YOU KNOW (share each fact only when the agent asks for it - the agent must probe):\n- Your name is Rahul.\n- Order ID: ST12345 (give it only when the agent asks for the order ID or order details).\n- Product: Sample Product.\n- Payment was made online (prepaid).\n- Order placed 5 days ago; no delivery, no update.\n\nWHAT YOU DO NOT KNOW: the current status of the order. Only the agent can tell you. The real status (which you must NEVER say yourself) is: the order is DELAYED and will be delivered within 2 days.\n\nHOW TO RESPOND:\n- If the agent asks for the order ID: \"Ji mera order ID ST12345 hai.\"\n- If the agent asks what the issue is: \"Ji maine order kiya tha lekin abhi tak receive nahi hua.\"\n- If the agent asks you about the status: \"Ji mujhe status ke baare mein confirm nahi hai, aap check karke bata sakte hain?\"\n- If the agent correctly tells you the order is delayed and will arrive within 2 days: confirm it back with relief, e.g. \"Achha ji, matlab mera order 2 din ke andar aa jayega?\" and accept the resolution.\n- If the agent says anything that contradicts the real status (delivered, cancelled, out of stock, a different timeline): politely push back like a confused customer - \"Nahi ji, mujhe to abhi tak kuch bhi receive nahi hua hai. Aap dobara check karenge please?\"\n- If the agent tries to close the call without telling you when the order will arrive: \"Lekin mera order kab tak aayega? Mujhe koi timeline to batayiye.\"\n- If the agent asks you to hold: \"Ji theek hai, main hold karta hoon.\" and stay silent until the agent returns.\n- After the issue is resolved and the agent asks if you need anything else: \"Nahi ji, bas yahi tha. Dhanyavaad.\"\n\nMood: polite and cooperative, mildly worried; a little impatient if the agent is unhelpful, rude or wrong, but never abusive.",
+  "evaluator_notes": "CORRECT RESOLUTION: the agent must inform the customer that the order is DELAYED and will be delivered within 2 days (both parts required for full marks on Correct and Complete Information).\n\nREQUIRED PROBING: ask for the Order ID (ST12345), verify customer/order details, understand the exact problem (order not received, 5 days, no update), and check/confirm the order status before giving the resolution.\n\nEXPECTED PORTAL ACTIONS (screen evidence only - NA unless verifiable): open Shopify, search the order ID, open order details, check order status.\n\nEXPECTED CRM ACTIONS (screen evidence only - NA unless verifiable): open CRM record, select the correct disposition, add remarks.\n\nNo hold, transfer or escalation is required for this scenario. If the agent places a hold, judge the hold procedure; otherwise mark Hold/Transfer NA. Case Escalation is NA unless the agent wrongly promises an escalation.",
+  "required_probing": [
+    "Order ID poochna",
+    "Customer/order details verify karna",
+    "Customer ki actual problem samajhna",
+    "Order status check karna"
+  ],
+  "expected_portal_actions": [
+    "Shopify open karna",
+    "Order ID search karna",
+    "Order details open karna",
+    "Order status check karna"
+  ],
+  "expected_crm_actions": [
+    "CRM record open karna",
+    "Correct disposition select karna",
+    "Required remarks add karna"
+  ],
+  "conversation_rules": {
+    "start_with_customer": true,
+    "customer_must_start_conversation": true,
+    "short_responses": true,
+    "natural_hinglish": true,
+    "do_not_coach_agent": true,
+    "do_not_reveal_hidden_information": true
+  },
+  "live_settings": {
+    "voice_name": "Puck",
+    "temperature": 0.8,
+    "max_duration_minutes": 15,
+    "setup_timeout_seconds": 15
+  },
+  "agent_instructions": [
+    "You will interact with an AI customer. Please behave exactly as you would in a real customer call.",
+    "The customer will speak first. Listen carefully and respond naturally in Hindi/Hinglish.",
+    "Use your normal tools (order portal / CRM) on the shared screen exactly as you would on a live call.",
+    "Click END CERTIFICATION only after you have closed the call properly."
+  ],
+  "scoring": {
+    "passing_percentage": 80,
+    "exclude_na_from_denominator": true,
+    "ztp_fail_score": 0
+  },
+  "notification_emails": [],
+  "rubric": [
+    {
+      "id": "P01",
+      "group": "Opening",
+      "parameter": "Standard Call Opening (Within 5 Sec. / Brand Name / Personalized Opening / Energetic Tone)",
+      "max_marks": 5,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Within the first few seconds the agent greets the customer, states the brand name (SoTrue), personalises the opening (own name / customer name) and offers help in an energetic tone."
+    },
+    {
+      "id": "P02",
+      "group": "Opening",
+      "parameter": "Acknowledgement",
+      "max_marks": 2,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent acknowledges the customer's concern once it is stated (e.g. 'Ji, main samajh sakta/sakti hoon')."
+    },
+    {
+      "id": "P03",
+      "group": "Soft Skills",
+      "parameter": "Professionalism (No Rude behavior) - ZTP",
+      "max_marks": 5,
+      "evidence_source": "transcript",
+      "zero_tolerance": true,
+      "guideline": "Zero Tolerance Policy. Any rude, sarcastic, argumentative or disrespectful behaviour = NC and fails the entire call. Polite and courteous throughout = C."
+    },
+    {
+      "id": "P04",
+      "group": "Soft Skills",
+      "parameter": "Placed Empathy / Apology / Assurance",
+      "max_marks": 5,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent expresses empathy or apologises for the delay/inconvenience and assures the customer of help."
+    },
+    {
+      "id": "P05",
+      "group": "Soft Skills",
+      "parameter": "ROS / Clarity / Accent (MTI) / Correct Pronunciation of Words",
+      "max_marks": 10,
+      "evidence_source": "audio",
+      "zero_tolerance": false,
+      "guideline": "Rate of speech, clarity, mother-tongue influence and pronunciation. Judge from the conversation audio when provided; otherwise infer only from transcript coherence and say so."
+    },
+    {
+      "id": "P06",
+      "group": "Soft Skills",
+      "parameter": "(Dull voice / Fumbling) Low Enthusiasm",
+      "max_marks": 12,
+      "evidence_source": "audio",
+      "zero_tolerance": false,
+      "guideline": "Energy, tone variation and enthusiasm; no dull or flat voice, no fumbling. Judge from audio when provided."
+    },
+    {
+      "id": "P07",
+      "group": "Soft Skills",
+      "parameter": "Active listening (Interruption / Repetition)",
+      "max_marks": 6,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent does not interrupt, does not make the customer repeat, and responds to what the customer actually said."
+    },
+    {
+      "id": "P08",
+      "group": "Soft Skills",
+      "parameter": "Grammar (Use of Casual, Incorrect, Incomplete Sentence)",
+      "max_marks": 10,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Correct, complete and professional Hindi/Hinglish sentences. Ignore obvious speech-to-text artifacts."
+    },
+    {
+      "id": "P09",
+      "group": "Soft Skills",
+      "parameter": "Accurate Probing",
+      "max_marks": 6,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent asks for the Order ID, verifies order/customer details, understands the actual problem and checks the order status before resolving."
+    },
+    {
+      "id": "P10",
+      "group": "Hold Procedure",
+      "parameter": "Should follow the Hold Procedure",
+      "max_marks": 4,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "If a hold is placed: asks permission, states reason and time, thanks the customer after the hold. NA if no hold was needed and none was taken."
+    },
+    {
+      "id": "P11",
+      "group": "Hold Procedure",
+      "parameter": "Transferred the call after placing efforts & with proper verbiages",
+      "max_marks": 3,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "If a transfer happens: effort made first and correct verbiage used. NA if no transfer situation arose."
+    },
+    {
+      "id": "P12",
+      "group": "Hold Procedure",
+      "parameter": "Dead Air not more than 10 secs",
+      "max_marks": 3,
+      "evidence_source": "audio",
+      "zero_tolerance": false,
+      "guideline": "No unexplained silence longer than 10 seconds. Judge from audio when provided or from transcript timestamp gaps."
+    },
+    {
+      "id": "P13",
+      "group": "Tagging",
+      "parameter": "Complete & Accurate Disposition In CRM",
+      "max_marks": 6,
+      "evidence_source": "screen",
+      "zero_tolerance": false,
+      "guideline": "Judge from the screen recording analysis: CRM record opened, correct disposition selected and remarks added. not_observed on a readable recording = NC; unclear = NA."
+    },
+    {
+      "id": "P14",
+      "group": "Tagging",
+      "parameter": "Case Escalation in CRM",
+      "max_marks": 5,
+      "evidence_source": "screen",
+      "zero_tolerance": false,
+      "guideline": "This scenario does not require escalation. NA unless the agent wrongly promises/raises an escalation (visible on screen or stated in the transcript)."
+    },
+    {
+      "id": "P15",
+      "group": "Resolution",
+      "parameter": "Correct and Complete Information",
+      "max_marks": 10,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent informs the customer that the order is delayed AND will be delivered within 2 days (must match the evaluator notes). Wrong, contradictory or missing timeline = NC."
+    },
+    {
+      "id": "P16",
+      "group": "Closing",
+      "parameter": "Further Assistance",
+      "max_marks": 4,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent asks whether the customer needs any further help before closing."
+    },
+    {
+      "id": "P17",
+      "group": "Closing",
+      "parameter": "Should close the call as per script and voice modulation",
+      "max_marks": 4,
+      "evidence_source": "transcript",
+      "zero_tolerance": false,
+      "guideline": "Agent thanks the customer and closes the call with the SoTrue closing script and proper voice modulation."
+    }
+  ],
+  "screen_analysis": {
+    "enabled": true,
+    "fps": 1
+  },
+  "recertification": {
+    "enabled": true,
+    "max_attempts": 3,
+    "cooldown_hours": 0
+  }
+}
